@@ -1,6 +1,7 @@
 // test/specs/usuarios/usuario.spec.js
 const { spec } = require('pactum');
 const { usuarioCreateSuccessSchema } = require('../../../src/schemas/usuario.schema.js');
+const { validateJoi } = require('../../../src/utils/validator');
 
 describe('Usuários', () => {
     it('POST /usuarios - Criação do usuário + contrato', async () => {

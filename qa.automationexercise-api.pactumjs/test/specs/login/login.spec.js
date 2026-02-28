@@ -1,10 +1,12 @@
 // test/specs/login/login.spec.js
 const { spec } = require('pactum');
-const { novoUsuario } = require('../../../src/utils/factory.js');
-const { loginSuccessSchema } = require('../../../src/schemas/login.schema.js');
+const { novoUsuario } = require('../../../src/utils/factory');
+const { loginSuccessSchema } = require('../../../src/schemas/login.schema');
+const { validateJoi } = require('../../../src/utils/validator');
 
 describe('Login - POST /login', () => {
     it('Cadastro com sucesso (pré-condição) + login com sucesso', async () => {
+    // Arrange
     const user = novoUsuario();
 
     await spec()
@@ -12,10 +14,14 @@ describe('Login - POST /login', () => {
     .withJson(user)
     .expectStatus(201);
 
-    const s = spec()
+    // Act
+    const body = await spec()
     .post('https://serverest.dev/login')
-    .withJson({ email: user.email, password: user.password });
+    .withJson({ email: user.email, password: user.password })
+    .expectStatus(200)
+    .returns('body');
 
-    await s.expectStatus(200).expectJsonSchema(loginSuccessSchema);
-});
+    // Assert (Contrato Joi)
+    validateJoi(loginSuccessSchema, body);
+    });
 });
