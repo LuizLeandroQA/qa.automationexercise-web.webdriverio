@@ -1,0 +1,26 @@
+{
+  "name": "qa.automationexercise-api.pactumjs",
+  "version": "1.0.0",
+  "description": "API Automation using PactumJS + Joi",
+  "main": "index.js",
+  "scripts": {
+  "test": "mocha \"test/specs/**/*.spec.js\" --timeout 10000",
+  "test:login": "mocha \"test/specs/login/*.spec.js\" --timeout 10000",
+  "test:usuarios": "mocha \"test/specs/usuarios/*.spec.js\" --timeout 10000",
+  "test:produtos": "mocha \"test/specs/produtos/*.spec.js\" --timeout 10000",
+  "report": "mocha \"test/specs/**/*.spec.js\" --timeout 10000 --reporter mochawesome --reporter-options reportDir=report,reportFilename=mochawesome,html=true,json=true"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
+    "joi": "^18.0.2",
+    "mocha": "^11.7.5",
+    "mochawesome": "^7.1.4",
+    "pactum": "^3.9.1"
+  }
+}

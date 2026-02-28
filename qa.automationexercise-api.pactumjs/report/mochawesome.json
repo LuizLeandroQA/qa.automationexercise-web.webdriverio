@@ -1,0 +1,210 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 4,
+    "passes": 2,
+    "pending": 0,
+    "failures": 2,
+    "start": "2026-02-28T19:41:01.314Z",
+    "end": "2026-02-28T19:41:02.720Z",
+    "duration": 1406,
+    "testsRegistered": 4,
+    "passPercent": 50,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a2e50608-8169-44b4-bfd9-28812157d672",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5489c6e0-1939-4e8d-9beb-fa34cbaec9a0",
+          "title": "Login - POST /login",
+          "fullFile": "C:\\Projetos\\qa.automationexercise-web.webdriverio\\qa.automationexercise-api.pactumjs\\test\\specs\\login\\login.spec.js",
+          "file": "\\test\\specs\\login\\login.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Cadastro com sucesso (pré-condição) + login com sucesso",
+              "fullTitle": "Login - POST /login Cadastro com sucesso (pré-condição) + login com sucesso",
+              "timedOut": false,
+              "duration": 644,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// AAA\n// Arrange\nconst payload = {\n    email: 'teste@qa.com',\n    password: '123456'\n};\n// Act\nconst response = await spec()\n    .post('https://serverest.dev/login')\n    .withJson(payload)\n    .expectStatus(200)\n    .toss();\n// Assert (contrato)\nconst { error } = loginSuccessSchema.validate(response.json, { abortEarly: false });\nif (error) throw error;",
+              "err": {
+                "message": "AssertionError: HTTP status 401 !== 200\n\n401 !== 200\n",
+                "estack": "AssertionError [ERR_ASSERTION]: HTTP status 401 !== 200\n\n401 !== 200\n\n    at Expect._validateStatus (node_modules\\pactum\\src\\models\\expect.js:106:14)\n    at Expect.validate (node_modules\\pactum\\src\\models\\expect.js:47:10)\n    at Tosser.validateResponse (node_modules\\pactum\\src\\models\\Tosser.js:255:23)\n    at Tosser.validate (node_modules\\pactum\\src\\models\\Tosser.js:219:18)\n    at Tosser.toss (node_modules\\pactum\\src\\models\\Tosser.js:46:18)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (test\\specs\\login\\login.spec.js:14:22)",
+                "diff": "- 401\n+ 200\n"
+              },
+              "uuid": "3c57914f-3ac7-4325-bfc1-00a4b9021d1a",
+              "parentUUID": "5489c6e0-1939-4e8d-9beb-fa34cbaec9a0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "3c57914f-3ac7-4325-bfc1-00a4b9021d1a"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 644,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        },
+        {
+          "uuid": "315ca464-b4f4-4491-b7dd-d27fe24de14b",
+          "title": "Produtos",
+          "fullFile": "C:\\Projetos\\qa.automationexercise-web.webdriverio\\qa.automationexercise-api.pactumjs\\test\\specs\\produtos\\produtos.spec.js",
+          "file": "\\test\\specs\\produtos\\produtos.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "POST /produtos - Cadastro de produto + contrato",
+              "fullTitle": "Produtos POST /produtos - Cadastro de produto + contrato",
+              "timedOut": false,
+              "duration": 182,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Arrange: primeiro login\nconst loginResp = await spec()\n    .post('https://serverest.dev/login')\n    .withJson({ email: 'teste@qa.com', password: '123456' })\n    .expectStatus(200)\n    .toss();\nconst token = loginResp.json.authorization; // ✅ sem res.json()\n// Act: cria produto\nconst produtoResp = await spec()\n    .post('https://serverest.dev/produtos')\n    .withHeaders('Authorization', token)\n    .withJson({\n    nome: `Produto QA ${Date.now()}`,\n    preco: 10,\n    descricao: 'produto teste',\n    quantidade: 1\n    })\n    .expectStatus(201)\n    .toss();\n// Assert contrato\nconst { error } = produtoCreateSuccessSchema.validate(produtoResp.json, { abortEarly: false });\nif (error) throw error;",
+              "err": {
+                "message": "AssertionError: HTTP status 401 !== 200\n\n401 !== 200\n",
+                "estack": "AssertionError [ERR_ASSERTION]: HTTP status 401 !== 200\n\n401 !== 200\n\n    at Expect._validateStatus (node_modules\\pactum\\src\\models\\expect.js:106:14)\n    at Expect.validate (node_modules\\pactum\\src\\models\\expect.js:47:10)\n    at Tosser.validateResponse (node_modules\\pactum\\src\\models\\Tosser.js:255:23)\n    at Tosser.validate (node_modules\\pactum\\src\\models\\Tosser.js:219:18)\n    at Tosser.toss (node_modules\\pactum\\src\\models\\Tosser.js:46:18)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (test\\specs\\produtos\\produtos.spec.js:7:23)",
+                "diff": "- 401\n+ 200\n"
+              },
+              "uuid": "a0cac900-75df-4ca7-a6c7-5f788d88b125",
+              "parentUUID": "315ca464-b4f4-4491-b7dd-d27fe24de14b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "a0cac900-75df-4ca7-a6c7-5f788d88b125"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 182,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        },
+        {
+          "uuid": "728001a7-3bd8-4c49-a5f2-ae6a57dd894b",
+          "title": "Usuários",
+          "fullFile": "C:\\Projetos\\qa.automationexercise-web.webdriverio\\qa.automationexercise-api.pactumjs\\test\\specs\\usuarios\\usuarios.spec.js",
+          "file": "\\test\\specs\\usuarios\\usuarios.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "POST /usuarios - Criação do usuário + contrato",
+              "fullTitle": "Usuários POST /usuarios - Criação do usuário + contrato",
+              "timedOut": false,
+              "duration": 178,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Arrange\nconst payload = {\n    nome: `Usuario QA ${Date.now()}`,\n    email: `qa${Date.now()}@teste.com`,\n    password: '123456',\n    administrador: 'true'\n};\n// Act\nconst response = await spec()\n    .post('https://serverest.dev/usuarios')\n    .withJson(payload)\n    .expectStatus(201)\n    .toss();\n// Assert contrato\nconst { error } = usuarioCreateSuccessSchema.validate(response.json, { abortEarly: false });\nif (error) throw error;",
+              "err": {},
+              "uuid": "d1821baf-1787-4bf0-9f53-abdb6f2ac0f5",
+              "parentUUID": "728001a7-3bd8-4c49-a5f2-ae6a57dd894b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "DELETE /usuarios/{_id} - Exclusão do usuário por Id",
+              "fullTitle": "Usuários DELETE /usuarios/{_id} - Exclusão do usuário por Id",
+              "timedOut": false,
+              "duration": 330,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Arrange: cria usuário\nconst created = await spec()\n    .post('https://serverest.dev/usuarios')\n    .withJson({\n    nome: `Usuario QA ${Date.now()}`,\n    email: `qa${Date.now()}@teste.com`,\n    password: '123456',\n    administrador: 'true'\n    })\n    .expectStatus(201)\n    .toss();\nconst userId = created.json._id; // ✅ sem created.json()\n// Act\nawait spec()\n    .delete(`https://serverest.dev/usuarios/${userId}`)\n    .expectStatus(200);",
+              "err": {},
+              "uuid": "5c9081b1-b7f2-4eb6-a652-0a77ca5f32d2",
+              "parentUUID": "728001a7-3bd8-4c49-a5f2-ae6a57dd894b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d1821baf-1787-4bf0-9f53-abdb6f2ac0f5",
+            "5c9081b1-b7f2-4eb6-a652-0a77ca5f32d2"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 508,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 10000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.5"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "report",
+        "reportFilename": "mochawesome",
+        "html": "true",
+        "json": "true"
+      },
+      "version": "6.3.2"
+    }
+  }
+}
