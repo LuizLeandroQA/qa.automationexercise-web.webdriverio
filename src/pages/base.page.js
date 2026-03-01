@@ -109,7 +109,7 @@ class BasePage {
     const element = typeof target === 'string' ? await $(target) : target;
 
     await element.waitForExist({ timeout });
-    await element.scrollIntoView();
+    await element.scrollIntoView({ block: 'center', inline: 'center' });
     await element.waitForDisplayed({ timeout });
     await element.waitForClickable({ timeout });
 
