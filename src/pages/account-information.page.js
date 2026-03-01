@@ -1,49 +1,190 @@
+// src/pages/account-information.page.js
 const BasePage = require('./base.page');
 
 /**
- * Account Information page (registration form).
+ * AccountInformationPage
+ *
+ * Representa a página de preenchimento de informações da conta
+ * durante o fluxo de cadastro de usuário.
+ *
+ * Responsável por:
+ * - Selecionar título (Mr/Mrs)
+ * - Preencher credenciais
+ * - Definir data de nascimento
+ * - Selecionar preferências (newsletter/offers)
+ * - Preencher dados de endereço
+ * - Submeter criação da conta
+ *
+ * Estende BasePage para reutilizar:
+ * - type()
+ * - clickWhenClickable()
+ * - padrões de espera e mitigação de flakiness
  */
 class AccountInformationPage extends BasePage {
 
   // Title
-    get titleMr() { return $('#id_gender1'); }
-    get titleMrs() { return $('#id_gender2'); }
+
+  /**
+   * Radio button para título "Mr".
+   * @returns {import('webdriverio').Element}
+   */
+  get titleMr() { return $('#id_gender1'); }
+
+  /**
+   * Radio button para título "Mrs".
+   * @returns {import('webdriverio').Element}
+   */
+  get titleMrs() { return $('#id_gender2'); }
 
   // Account credentials
-    get passwordInput() { return $('#password'); }
-    get daySelect() { return $('#days'); }
-    get monthSelect() { return $('#months'); }
-    get yearSelect() { return $('#years'); }
+
+  /**
+   * Campo de senha do usuário.
+   * @returns {import('webdriverio').Element}
+   */
+  get passwordInput() { return $('#password'); }
+
+  /**
+   * Select de dia de nascimento.
+   * @returns {import('webdriverio').Element}
+   */
+  get daySelect() { return $('#days'); }
+
+  /**
+   * Select de mês de nascimento.
+   * @returns {import('webdriverio').Element}
+   */
+  get monthSelect() { return $('#months'); }
+
+  /**
+   * Select de ano de nascimento.
+   * @returns {import('webdriverio').Element}
+   */
+  get yearSelect() { return $('#years'); }
 
   // Checkboxes
-    get newsletterCheckbox() { return $('#newsletter'); }
-    get offersCheckbox() { return $('#optin'); }
+
+  /**
+   * Checkbox para inscrição na newsletter.
+   * @returns {import('webdriverio').Element}
+   */
+  get newsletterCheckbox() { return $('#newsletter'); }
+
+  /**
+   * Checkbox para recebimento de ofertas/promos.
+   * @returns {import('webdriverio').Element}
+   */
+  get offersCheckbox() { return $('#optin'); }
 
   // Address fields
-    get firstNameInput() { return $('#first_name'); }
-    get lastNameInput() { return $('#last_name'); }
-    get companyInput() { return $('#company'); }
-    get address1Input() { return $('#address1'); }
-    get address2Input() { return $('#address2'); }
-    get countrySelect() { return $('#country'); }
-    get stateInput() { return $('#state'); }
-    get cityInput() { return $('#city'); }
-    get zipcodeInput() { return $('#zipcode'); }
-    get mobileNumberInput() { return $('#mobile_number'); }
 
-    get createAccountButton() { return $('button[data-qa="create-account"]'); }
-
-    /**
-   * Fills the registration form and submits it.
-   * @param {object} user
+  /**
+   * Campo de primeiro nome.
+   * @returns {import('webdriverio').Element}
    */
-    async fillAndSubmit(user) {
+  get firstNameInput() { return $('#first_name'); }
+
+  /**
+   * Campo de sobrenome.
+   * @returns {import('webdriverio').Element}
+   */
+  get lastNameInput() { return $('#last_name'); }
+
+  /**
+   * Campo de empresa.
+   * @returns {import('webdriverio').Element}
+   */
+  get companyInput() { return $('#company'); }
+
+  /**
+   * Campo de endereço principal.
+   * @returns {import('webdriverio').Element}
+   */
+  get address1Input() { return $('#address1'); }
+
+  /**
+   * Campo de endereço complementar.
+   * @returns {import('webdriverio').Element}
+   */
+  get address2Input() { return $('#address2'); }
+
+  /**
+   * Select de país.
+   * @returns {import('webdriverio').Element}
+   */
+  get countrySelect() { return $('#country'); }
+
+  /**
+   * Campo de estado.
+   * @returns {import('webdriverio').Element}
+   */
+  get stateInput() { return $('#state'); }
+
+  /**
+   * Campo de cidade.
+   * @returns {import('webdriverio').Element}
+   */
+  get cityInput() { return $('#city'); }
+
+  /**
+   * Campo de CEP.
+   * @returns {import('webdriverio').Element}
+   */
+  get zipcodeInput() { return $('#zipcode'); }
+
+  /**
+   * Campo de número de telefone.
+   * @returns {import('webdriverio').Element}
+   */
+  get mobileNumberInput() { return $('#mobile_number'); }
+
+  /**
+   * Botão responsável por finalizar a criação da conta.
+   * @returns {import('webdriverio').Element}
+   */
+  get createAccountButton() { return $('button[data-qa="create-account"]'); }
+
+  /**
+   * Preenche o formulário completo de cadastro e submete a criação da conta.
+   *
+   * Fluxo executado:
+   * 1. Seleção de título (Mr/Mrs).
+   * 2. Preenchimento de senha e data de nascimento.
+   * 3. Seleção opcional de newsletter e ofertas.
+   * 4. Preenchimento dos dados de endereço.
+   * 5. Submissão do formulário.
+   *
+   * Espera-se que o objeto user contenha:
+   * {
+   *   title,
+   *   password,
+   *   birthDay,
+   *   birthMonth,
+   *   birthYear,
+   *   newsletter,
+   *   offers,
+   *   firstName,
+   *   lastName,
+   *   company,
+   *   address1,
+   *   address2,
+   *   country,
+   *   state,
+   *   city,
+   *   zipcode,
+   *   mobileNumber
+   * }
+   *
+   * @param {Object} user Objeto contendo os dados necessários para o cadastro.
+   * @returns {Promise<void>}
+   */
+  async fillAndSubmit(user) {
 
     // Title
     if (user.title === 'Mr') {
-        await this.clickWhenClickable(this.titleMr);
+      await this.clickWhenClickable(this.titleMr);
     } else {
-        await this.clickWhenClickable(this.titleMrs);
+      await this.clickWhenClickable(this.titleMrs);
     }
 
     // Account info
@@ -54,11 +195,11 @@ class AccountInformationPage extends BasePage {
 
     // Checkboxes
     if (user.newsletter) {
-        await this.clickWhenClickable(this.newsletterCheckbox);
+      await this.clickWhenClickable(this.newsletterCheckbox);
     }
 
     if (user.offers) {
-        await this.clickWhenClickable(this.offersCheckbox);
+      await this.clickWhenClickable(this.offersCheckbox);
     }
 
     // Address
@@ -76,7 +217,7 @@ class AccountInformationPage extends BasePage {
     await this.type(this.mobileNumberInput, user.mobileNumber);
 
     await this.clickWhenClickable(this.createAccountButton);
-    }
+  }
 }
 
 module.exports = new AccountInformationPage();

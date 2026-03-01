@@ -31,6 +31,9 @@ exports.config = {
       browserName: 'chrome',
       'goog:chromeOptions': {
         args: [
+          '--headless=new',
+          '--disable-gpu',
+          '--window-size=1920,1080',
           '--disable-notifications',
           '--disable-popup-blocking',
           '--disable-infobars',
