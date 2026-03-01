@@ -2,12 +2,15 @@ name: Web Automation CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   test:
+    name: Run WebDriverIO Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +26,8 @@ jobs:
         run: npm ci
 
       - name: Run Web Tests (Headless)
+        env:
+          CI: true
         run: npx wdio run wdio.conf.js
 
       - name: Upload Allure Results
