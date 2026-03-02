@@ -26,49 +26,36 @@ Automatizar cenários do site Automation Exercise, garantindo:
 
 ## 📁 Estrutura do Projeto
 
+```text
 qa.automationexercise-web.webdriverio
-│
-├── .github/
-│ └── workflows/
-│ └── ci.yml # Pipeline de CI (GitHub Actions)
-│
-├── .vscode/ # Configurações locais do VS Code (opcional)
-│
-├── allure-report/ # Relatório gerado após execução
-├── allure-results/ # Resultados brutos para geração do Allure
-│
-├── node_modules/ # Dependências do projeto
-│
-├── src/
-│ ├── actions/
-│ │ └── user.actions.js # Orquestra fluxos completos (cadastro, exclusão, etc.)
-│ │
-│ ├── data/
-│ │ └── user.factory.js # Factory para geração de dados dinâmicos
-│ │
-│ ├── pages/
-│ │ ├── base.page.js # Classe base com métodos reutilizáveis
-│ │ ├── home.page.js # Página inicial
-│ │ ├── signup-login.page.js # Tela de login / cadastro
-│ │ ├── account-information.page.js # Formulário completo de cadastro
-│ │ ├── account-created.page.js # Tela de confirmação de criação
-│ │ └── account-deleted.page.js # Tela de confirmação de exclusão
-│ │
-│ └── utils/
-│ └── random.js # Utilitário para geração de dados aleatórios
-│
-├── test/
-│ └── specs/
-│ ├── register-user.spec.js # Fluxo completo: cadastro + exclusão
-│ ├── login.page.js # Testes relacionados a login
-│ ├── logout.spec.js # Teste de logout
-│ ├── smoke.spec.js # Testes rápidos de validação geral
-│ └── test2.e2e.js # Cenários adicionais E2E
-│
-├── .gitignore # Arquivos ignorados pelo Git
-├── package.json # Dependências e scripts do projeto
-├── package-lock.json # Lock de versões das dependências
-└── wdio.conf.js # Configuração principal do WebdriverIO
+├─ .github/
+│  └─ workflows/
+│     └─ ci.yml # Pipeline de CI (GitHub Actions)
+├─ .vscode/ # Configurações locais do VS Code (opcional)
+├─ allure-report/ # Relatório gerado após execução
+├─ allure-results/ # Resultados brutos para geração do Allure
+├─ node_modules/ # Dependências do projeto
+├─ src/
+│  ├─ actions/
+│  │  └─ user.actions.js # Orquestra fluxos completos
+│  ├─ data/
+│  │  └─ user.factory.js # Geração de dados dinâmicos
+│  ├─ pages/
+│  │  ├─ base.page.js
+│  │  ├─ home.page.js
+│  │  ├─ signup-login.page.js
+│  │  ├─ account-information.page.js
+│  │  ├─ account-created.page.js
+│  │  └─ account-deleted.page.js
+│  └─ utils/
+│     └─ random.js
+└─ test/
+   └─ specs/
+      ├─ register-user.spec.js
+      ├─ login.spec.js
+      ├─ logout.spec.js
+      ├─ smoke.spec.js
+      └─ test2.e2e.js
 
 ---
 
