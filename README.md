@@ -48,7 +48,7 @@ qa.automationexercise-web.webdriverio
 │  │  ├─ account-created.page.js          # Confirmação de criação
 │  │  └─ account-deleted.page.js          # Confirmação de exclusão
 │  └─ utils/
-│     └─ random.js
+│     └─ random.js                        # Utilitário para geração de dados aleatórios de teste
 └─ test/
    └─ specs/
       ├─ register-user.spec.js            # Suite de cadastro e exclusão
