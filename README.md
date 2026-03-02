@@ -30,32 +30,32 @@ Automatizar cenários do site Automation Exercise, garantindo:
 qa.automationexercise-web.webdriverio
 ├─ .github/
 │  └─ workflows/
-│     └─ ci.yml # Pipeline de CI (GitHub Actions)
-├─ .vscode/ # Configurações locais do VS Code (opcional)
-├─ allure-report/ # Relatório gerado após execução
-├─ allure-results/ # Resultados brutos para geração do Allure
-├─ node_modules/ # Dependências do projeto
+│     └─ ci.yml                           # Pipeline de CI (GitHub Actions)
+├─ .vscode/                               # Configurações locais do VS Code (opcional)
+├─ allure-report/                         # Relatório gerado após execução
+├─ allure-results/                        # Resultados brutos para geração do Allure
+├─ node_modules/                          # Dependências do projeto
 ├─ src/
 │  ├─ actions/
-│  │  └─ user.actions.js # Orquestra fluxos completos
+│  │  └─ user.actions.js                  # Orquestra fluxos completos
 │  ├─ data/
-│  │  └─ user.factory.js # Geração de dados dinâmicos
+│  │  └─ user.factory.js                  # Geração de dados dinâmicos
 │  ├─ pages/
-│  │  ├─ base.page.js
-│  │  ├─ home.page.js
-│  │  ├─ signup-login.page.js
-│  │  ├─ account-information.page.js
-│  │  ├─ account-created.page.js
-│  │  └─ account-deleted.page.js
+│  │  ├─ base.page.js                     # Classe base com métodos reutilizáveis
+│  │  ├─ home.page.js                     # Página inicial
+│  │  ├─ signup-login.page.js             # Tela de login e cadastro
+│  │  ├─ account-information.page.js      # Formulário completo de cadastro
+│  │  ├─ account-created.page.js          # Confirmação de criação
+│  │  └─ account-deleted.page.js          # Confirmação de exclusão
 │  └─ utils/
 │     └─ random.js
 └─ test/
    └─ specs/
-      ├─ register-user.spec.js
-      ├─ login.spec.js
-      ├─ logout.spec.js
-      ├─ smoke.spec.js
-      └─ test2.e2e.js
+      ├─ register-user.spec.js            # Suite de cadastro e exclusão
+      ├─ login.spec.js                    # Suite de autenticação
+      ├─ logout.spec.js                   # Suite de validação do fluxo de logout e invalidação de sessão
+      ├─ smoke.spec.js                    # Suite de validação crítica (sanity checks)
+      └─ test2.e2e.js                     # Suite E2E validando fluxos completos sob diferentes estados da aplicação
 
 ---
 
