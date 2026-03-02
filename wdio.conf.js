@@ -1,4 +1,7 @@
 // wdio.conf.js
+const fs = require('fs');
+const path = require('path');
+
 exports.config = {
 
   //
@@ -62,6 +65,7 @@ exports.config = {
   // ===================
   // Test Configurations
   // ===================
+
   logLevel: 'warn',
   bail: 0,
 
@@ -92,34 +96,23 @@ exports.config = {
 
   //
   // =====
-  // Services
-  // =====
-  //services: ['devtools'],
-
-  //
-  // =====
   // Hooks
   // =====
-  //before: async function () {
-  //  try {
-  //    await browser.cdp('Network', 'enable');
 
-  //   await browser.cdp('Network', 'setBlockedURLs', {
-  //      urls: [
-  //        '*googlesyndication.com*',
-  //        '*doubleclick.net*',
-  //        '*googleadservices.com*',
-  //        '*adservice.google.com*',
-  //        '*adsystem.com*',
-  //        '*googletagmanager.com*',
-  //        '*googletagservices.com*',
-  //        '*gpt.js*',
-  //      ],
-  //    });
+afterTest: async function (test, context, { error }) {
+  if (error) {
+    const dir = path.resolve(__dirname, 'errorShots');
 
-  //    console.log('[CDP] Bloqueio de ads ativado com sucesso');
-  //  } catch (e) {
-  //    console.warn('[CDP] Não foi possível habilitar bloqueio de ads via CDP:', e?.message || e);
-  //  }
-  //},
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    const safeTitle = String(test.title).replace(/[<>:"/\\|?*\s]+/g, '_');
+    const screenshotPath = path.join(dir, `${Date.now()}-${safeTitle}.png`);
+
+    await browser.saveScreenshot(screenshotPath);
+    console.log(`📸 Screenshot salvo em: ${screenshotPath}`);
+  }
+}
+
 };

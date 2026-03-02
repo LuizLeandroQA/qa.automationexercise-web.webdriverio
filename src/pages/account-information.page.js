@@ -21,7 +21,6 @@ const BasePage = require('./base.page');
  * - padrões de espera e mitigação de flakiness
  */
 class AccountInformationPage extends BasePage {
-
   // Title
 
   /**
@@ -147,39 +146,10 @@ class AccountInformationPage extends BasePage {
   /**
    * Preenche o formulário completo de cadastro e submete a criação da conta.
    *
-   * Fluxo executado:
-   * 1. Seleção de título (Mr/Mrs).
-   * 2. Preenchimento de senha e data de nascimento.
-   * 3. Seleção opcional de newsletter e ofertas.
-   * 4. Preenchimento dos dados de endereço.
-   * 5. Submissão do formulário.
-   *
-   * Espera-se que o objeto user contenha:
-   * {
-   *   title,
-   *   password,
-   *   birthDay,
-   *   birthMonth,
-   *   birthYear,
-   *   newsletter,
-   *   offers,
-   *   firstName,
-   *   lastName,
-   *   company,
-   *   address1,
-   *   address2,
-   *   country,
-   *   state,
-   *   city,
-   *   zipcode,
-   *   mobileNumber
-   * }
-   *
    * @param {Object} user Objeto contendo os dados necessários para o cadastro.
    * @returns {Promise<void>}
    */
   async fillAndSubmit(user) {
-
     // Title
     if (user.title === 'Mr') {
       await this.clickWhenClickable(this.titleMr);
@@ -216,7 +186,14 @@ class AccountInformationPage extends BasePage {
     await this.type(this.zipcodeInput, user.zipcode);
     await this.type(this.mobileNumberInput, user.mobileNumber);
 
-    await this.clickWhenClickable(this.createAccountButton);
+    // Submit (clique robusto)
+    await this.createAccountButton.waitForClickable({ timeout: 60000 });
+
+    try {
+      await this.createAccountButton.click();
+    } catch (e) {
+      await browser.execute((el) => el.click(), this.createAccountButton);
+    }
   }
 }
 

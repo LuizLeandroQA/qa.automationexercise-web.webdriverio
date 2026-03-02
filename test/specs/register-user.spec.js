@@ -14,7 +14,6 @@ describe('Regression Suite - User Registration', () => {
     // Act
     // ====================
     await UserActions.register(user);
-    await $('//*[contains(.,"Logged in as")]').waitForDisplayed({ timeout: 60000 });
     await UserActions.deleteCurrentAccount();
 
     // ====================

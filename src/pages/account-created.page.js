@@ -1,60 +1,60 @@
 // src/pages/account-created.page.js
 const BasePage = require('./base.page');
 
-/**
- * AccountCreatedPage
- *
- * Representa a tela de confirmação exibida após a criação
- * bem-sucedida de uma nova conta na aplicação.
- *
- * Responsável por:
- * - Validar que a conta foi criada com sucesso
- * - Permitir continuidade do fluxo após o cadastro
- *
- * Estende BasePage para reutilizar interações seguras
- * como clickWhenClickable e padrões de espera.
- */
 class AccountCreatedPage extends BasePage {
+  get header() {
+    return $('h2[data-qa="account-created"]');
+  }
 
-    /**
-     * Cabeçalho principal da tela de confirmação.
-     * Exibe a mensagem "ACCOUNT CREATED!".
-     *
-     * @returns {import('webdriverio').Element}
-     */
-    get header() { return $('h2[data-qa="account-created"]'); }
+  get continueButton() {
+    return $('a[data-qa="continue-button"]');
+  }
 
-    /**
-     * Botão "Continue" exibido após criação da conta.
-     *
-     * @returns {import('webdriverio').Element}
-     */
-    get continueButton() { return $('a[data-qa="continue-button"]'); }
+  get loggedInAs() {
+    return $('//a[contains(., "Logged in as")]');
+  }
 
-    /**
-     * Valida que a tela de confirmação de conta criada
-     * está visível e contém o texto esperado.
-     *
-     * Validações realizadas:
-     * 1. Header está visível.
-     * 2. Texto contém "ACCOUNT CREATED!".
-     *
-     * @returns {Promise<void>}
-     */
-    async assertAccountCreated() {
-        await expect(this.header).toBeDisplayed();
-        await expect(this.header).toHaveText(expect.stringContaining('ACCOUNT CREATED!'));
+  async assertAccountCreated() {
+    await this.dismissOverlays();
+
+    let lastUrl = await browser.getUrl();
+
+    await browser.waitUntil(
+      async () => {
+        lastUrl = await browser.getUrl();
+
+        if (lastUrl.includes('/account_created')) {
+          return await this.header.isDisplayed();
+        }
+
+        return await this.loggedInAs.isDisplayed();
+      },
+      {
+        timeout: 60000,
+        interval: 500,
+        timeoutMsg:
+          'Nem a tela /account_created apareceu, nem o "Logged in as". Veja o log da URL atual.',
+      }
+    );
+
+    console.log(`URL após cadastro: ${lastUrl}`);
+
+    if (lastUrl.includes('/account_created')) {
+      await expect(this.header).toBeDisplayed();
+      await expect(this.header).toHaveTextContaining('ACCOUNT CREATED!');
+    } else {
+      await expect(this.loggedInAs).toBeDisplayed();
     }
+  }
 
-    /**
-     * Clica no botão "Continue" para prosseguir
-     * no fluxo após a criação da conta.
-     *
-     * @returns {Promise<void>}
-     */
-    async continue() {
-        await this.clickWhenClickable(this.continueButton);
-    }
+  async continue() {
+    // Só existe na tela /account_created
+    const url = await browser.getUrl();
+    if (!url.includes('/account_created')) return;
+
+    await this.dismissOverlays();
+    await this.clickWhenClickable(this.continueButton, 60000);
+  }
 }
 
 module.exports = new AccountCreatedPage();
